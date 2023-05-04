@@ -169,7 +169,7 @@ def calc_interpolation(
             val_1 = np.log(val_1)
             ret = pd.Series(np.exp(val_0 * wt_0 + val_1 * wt_1))
     else:
-        msg = f"The value passed to method [{str(method)}] is not recognized."
+        msg = f"The value passed to method [{method}] is not recognized."
         msg += " Please use one of 'linear' or 'log'."
         raise ValueError(msg)
 
@@ -234,8 +234,7 @@ def calc_pvfnb(pvfb: pd.Series, pvfp: pd.Series, net_benefit_method: str) -> pd.
     2    2.0
     """
     if net_benefit_method == "NLP":
-        nlp = pvfb.iat[0] / pvfp.iat[0]
-        pvfnb = pvfp * nlp
+        pvfnb = pvfp * (pvfb.iat[0] / pvfp.iat[0])
     elif net_benefit_method == "PT1":
         nlp = pvfb.iat[1] / pvfp.iat[1]
         pvfnb = pvfp * nlp

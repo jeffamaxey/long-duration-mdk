@@ -800,11 +800,9 @@ def frame_filter(
         query = f"{end_duration_col} >= @begin_date"
     elif begin_date is None and end_date is not None:
         query = f"{begin_duration_col} <= @end_date"
-    elif begin_date is not None and end_date is not None:
+    elif begin_date is not None:
         query = f"{end_duration_col} >= @begin_date and {begin_duration_col} <= @end_date"
     else:
         query = None
 
-    if query is not None:
-        return frame.query(query)
-    return frame
+    return frame.query(query) if query is not None else frame
